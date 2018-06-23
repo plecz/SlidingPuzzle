@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleCore", "PuzzleCore\Pu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleCore.Test", "PuzzleCore.Test\PuzzleCore.Test.csproj", "{C0F28AB6-7C7F-4690-9A11-5CCF3E5001AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePuzzle", "ConsolePuzzle\ConsolePuzzle.csproj", "{20CBF936-BBB7-4259-9B15-47952261D907}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C0F28AB6-7C7F-4690-9A11-5CCF3E5001AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0F28AB6-7C7F-4690-9A11-5CCF3E5001AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0F28AB6-7C7F-4690-9A11-5CCF3E5001AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20CBF936-BBB7-4259-9B15-47952261D907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20CBF936-BBB7-4259-9B15-47952261D907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20CBF936-BBB7-4259-9B15-47952261D907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20CBF936-BBB7-4259-9B15-47952261D907}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

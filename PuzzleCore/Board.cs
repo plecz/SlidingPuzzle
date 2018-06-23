@@ -17,7 +17,8 @@ namespace PuzzleCore
             ValidateSize();
 
             _state = new int[width * height];
-            //SetInitialState();
+            //***
+            SetInitialState();
         }
 
         private Board(int[] data)
@@ -129,7 +130,7 @@ namespace PuzzleCore
 
         public Board Move(Directions direction)
         {
-            if (direction != Directions.Up || direction != Directions.Down || direction != Directions.Left || direction != Directions.Right)
+            if (direction != Directions.Up && direction != Directions.Down && direction != Directions.Left && direction != Directions.Right)
             {
                 throw new ArgumentException("direction ***");
             }
@@ -174,12 +175,12 @@ namespace PuzzleCore
                     nextState[esIndex + Width] = 0;
                     break;
                 case Directions.Left:
-                    nextState[esIndex] = _state[esIndex + 1];
-                    nextState[esIndex + 1] = 0;
-                    break;
-                case Directions.Right:
                     nextState[esIndex] = _state[esIndex - 1];
                     nextState[esIndex - 1] = 0;
+                    break;
+                case Directions.Right:
+                    nextState[esIndex] = _state[esIndex + 1];
+                    nextState[esIndex + 1] = 0;
                     break;
                 default:
                     throw new ArgumentException("direction ***");
