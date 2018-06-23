@@ -55,21 +55,21 @@ namespace PuzzleCore.Test
             Assert.Equal(height, sut.Height);
         }
 
-        [Theory]
-        [ClassData(typeof(TD_StandardBoardSizes))]
-        public void CreateBoard_InitialState(int width, int height)
-        {
-            var length = width * height;
-            var state = new int[length];
-            for (int i = 0; i < length- 1; ++i)
-            {
-                state[i] = i + 1;
-            }
-            state[length - 1] = 0;
+        //[Theory]
+        //[ClassData(typeof(TD_StandardBoardSizes))]
+        //public void CreateBoard_InitialState(int width, int height)
+        //{
+        //    var length = width * height;
+        //    var state = new int[length];
+        //    for (int i = 0; i < length - 1; ++i)
+        //    {
+        //        state[i] = i + 1;
+        //    }
+        //    state[length - 1] = 0;
 
-            var sut = new Board(width, height);
+        //    var sut = new Board(width, height);
 
-            Assert.Equal(state, sut.State);
-        }
+        //    Assert.Equal(state, sut.State);
+        //}
     }
 }

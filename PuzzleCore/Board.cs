@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace PuzzleCore
             ValidateSize();
 
             _state = new int[width * height];
-            SetInitialState();
+            //SetInitialState();
         }
 
         private Board(int[] data)
@@ -74,7 +75,6 @@ namespace PuzzleCore
         public int Width { get { return _width; } }
         public int Height { get { return _height; } }
 
-
         public Tuple<int, int> ESPosition
         {
             get
@@ -126,8 +126,24 @@ namespace PuzzleCore
                 return d;
             }
         }
-        
-        public IReadOnlyCollection<int> State
+
+        public Board Move(Directions direction)
+        {
+            if (direction != Directions.Up || direction != Directions.Down || direction != Directions.Left || direction != Directions.Right)
+            {
+                throw new ArgumentException("direction ***");
+            }
+            if ((ValidMoves & direction) == Directions.None)
+            {
+                throw new ArgumentException("direction ***");
+            }
+
+            var nextBoard = new Board(Width, Height);
+            nextBoard._state = NextState(direction);
+            return nextBoard;
+        }
+
+        public ReadOnlyCollection<int> State
         {
             get { return Array.AsReadOnly(_state); }
         }
@@ -141,6 +157,35 @@ namespace PuzzleCore
         {
             var len = Width * Height;
             _state = (from n in Enumerable.Range(1, len) select n % len).ToArray();
+        }
+
+        private int[] NextState(Directions direction)
+        {
+            var esIndex = GetESIndex();
+            int[] nextState = (int[])_state.Clone();
+            switch (direction)
+            {
+                case Directions.Up:
+                    nextState[esIndex] = _state[esIndex - Width];
+                    nextState[esIndex - Width] = 0;
+                    break;
+                case Directions.Down:
+                    nextState[esIndex] = _state[esIndex + Width];
+                    nextState[esIndex + Width] = 0;
+                    break;
+                case Directions.Left:
+                    nextState[esIndex] = _state[esIndex + 1];
+                    nextState[esIndex + 1] = 0;
+                    break;
+                case Directions.Right:
+                    nextState[esIndex] = _state[esIndex - 1];
+                    nextState[esIndex - 1] = 0;
+                    break;
+                default:
+                    throw new ArgumentException("direction ***");
+            }
+
+            return nextState;
         }
 
         private readonly int _width;
