@@ -6,7 +6,7 @@ namespace PuzzleCore.Test
     public class CreateBoard
     {
         [Theory]
-        [ClassData(typeof(StandardBoardSizes))]
+        [ClassData(typeof(TD_StandardBoardSizes))]
         public void CreatedBoard_NotNull(int width, int height)
         {
             var sut = new Board(width, height);
@@ -56,7 +56,7 @@ namespace PuzzleCore.Test
         }
 
         [Theory]
-        [ClassData(typeof(StandardBoardSizes))]
+        [ClassData(typeof(TD_StandardBoardSizes))]
         public void CreateBoard_InitialState(int width, int height)
         {
             var length = width * height;

@@ -7,7 +7,7 @@ namespace PuzzleCore.Test
     public class SerializeBoard
     {
         [Theory]
-        [ClassData(typeof(StandardBoardSizes))]
+        [ClassData(typeof(TD_StandardBoardSizes))]
         public void SerializedBoard_NotEmpty(int width, int height)
         {
             var sut = new Board(width, height);
@@ -16,7 +16,7 @@ namespace PuzzleCore.Test
         }
 
         [Theory]
-        [ClassData(typeof(StandardBoardSizes))]
+        [ClassData(typeof(TD_StandardBoardSizes))]
         public void SerializedBoard_HasCorrectNumberOfElements(int width, int height)
         {
             var sut = new Board(width, height);
@@ -27,7 +27,7 @@ namespace PuzzleCore.Test
         }
 
         [Theory]
-        [ClassData(typeof(StandardBoardSizes))]
+        [ClassData(typeof(TD_StandardBoardSizes))]
         public void SerializedBoard_AllElementsParseableToInt(int width, int height)
         {
             var sut = new Board(width, height);
@@ -68,7 +68,7 @@ namespace PuzzleCore.Test
         }
 
         [Theory]
-        [ClassData(typeof(StandardBoardSizes))]
+        [ClassData(typeof(TD_StandardBoardSizes))]
         public void SerializedBoard_HasCorrectInitialStateData(int width, int height)
         {
             var sut = new Board(width, height);

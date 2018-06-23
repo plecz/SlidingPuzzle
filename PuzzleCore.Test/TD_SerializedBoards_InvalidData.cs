@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections;
 using Xunit;
 
-public class SerializedBoards_InvalidData : TheoryData<string>
+public class TD_SerializedBoards_InvalidData : TheoryData<string>
 {
-    public SerializedBoards_InvalidData()
+    public TD_SerializedBoards_InvalidData()
     {
         // More than one empty space
         Add(@"2, 2,

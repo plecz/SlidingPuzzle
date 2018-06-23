@@ -1,9 +1,9 @@
 ﻿using System;
 using Xunit;
 
-public class StandardBoardSizes : TheoryData<int, int>
+public class TD_StandardBoardSizes : TheoryData<int, int>
 {
-    public StandardBoardSizes()
+    public TD_StandardBoardSizes()
     {
         Add(2, 2);
         Add(2, 3);

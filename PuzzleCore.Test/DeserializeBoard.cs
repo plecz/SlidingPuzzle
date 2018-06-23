@@ -7,7 +7,7 @@ namespace PuzzleCore.Test
     {
         #pragma warning disable xUnit1026 // Warning about unused test parameters
         [Theory]
-        [ClassData(typeof(SerializedBoards))]
+        [ClassData(typeof(TD_SerializedBoards))]
         public void DeserializedBoard_NotNull(string data, int width, int height, int[] state)
         {
             var sut = Board.FromString(data);
@@ -16,7 +16,7 @@ namespace PuzzleCore.Test
         }
 
         [Theory]
-        [ClassData(typeof(SerializedBoards))]
+        [ClassData(typeof(TD_SerializedBoards))]
         public void DeserializedBoard_HasCorrectWidth(string data, int width, int height, int[] state)
         { 
             var sut = Board.FromString(data);
@@ -25,7 +25,7 @@ namespace PuzzleCore.Test
         }
 
         [Theory]
-        [ClassData(typeof(SerializedBoards))]
+        [ClassData(typeof(TD_SerializedBoards))]
         public void DeserializedBoard_HasCorrectHeight(string data, int width, int height, int[] state)
         {
             var sut = Board.FromString(data);
@@ -34,7 +34,7 @@ namespace PuzzleCore.Test
         }
 
         [Theory]
-        [ClassData(typeof(SerializedBoards))]
+        [ClassData(typeof(TD_SerializedBoards))]
         public void DeserializedBoard_HasCorrectStateData(string data, int width, int height, int[] state)
         {
             var sut = Board.FromString(data);
@@ -44,14 +44,14 @@ namespace PuzzleCore.Test
         #pragma warning restore xUnit1026
 
         [Theory]
-        [ClassData(typeof(SerializedBoards_InvalidData))]
+        [ClassData(typeof(TD_SerializedBoards_InvalidData))]
         public void DeserializeBoard_InvalidData_Throws(string data)
         {
             Assert.Throws<ArgumentException>(() => Board.FromString(data));
         }
 
         [Theory]
-        [ClassData(typeof(SerializedBoards_InvalidData))]
+        [ClassData(typeof(TD_SerializedBoards_InvalidData))]
         public void DeserializeBoard_InvalidSize_Throws(string data)
         {
             Assert.Throws<ArgumentException>(() => Board.FromString(data));

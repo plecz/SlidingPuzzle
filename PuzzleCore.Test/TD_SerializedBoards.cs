@@ -2,9 +2,9 @@
 using System.Collections;
 using Xunit;
 
-public class SerializedBoards : TheoryData<string, int, int, int[]>
+public class TD_SerializedBoards : TheoryData<string, int, int, int[]>
 {
-    public SerializedBoards()
+    public TD_SerializedBoards()
     {
         Add(@"2, 2,
               0, 1,

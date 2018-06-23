@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace PuzzleCore
 {
     public class Board
@@ -72,10 +73,68 @@ namespace PuzzleCore
 
         public int Width { get { return _width; } }
         public int Height { get { return _height; } }
+
+
+        public Tuple<int, int> ESPosition
+        {
+            get
+            {
+                var i = GetESIndex();
+                return new Tuple<int, int>(i % Width, i / Width);
+            }
+        }
+        //public int ESRow
+        //{
+        //    get
+        //    {
+        //        return GetESIndex() % Width;
+        //    }
+        //}
+
+        //public int ESColumn
+        //{
+        //    get
+        //    {
+        //        return GetESIndex() / Width;
+        //    }
+        //}
+
+        public Directions ValidMoves
+        {
+            get
+            {
+                var column = ESPosition.Item1;
+                var row = ESPosition.Item2;
+                var d = Directions.None;
+                if (row > 0)
+                {
+                    d |= Directions.Up;
+                }
+                if (row < Height - 1)
+                {
+                    d |= Directions.Down;
+                }
+                if (column > 0)
+                {
+                    d |= Directions.Left;
+                }
+                if (column < Width - 1)
+                {
+                    d |= Directions.Right;
+                }
+
+                return d;
+            }
+        }
         
         public IReadOnlyCollection<int> State
         {
             get { return Array.AsReadOnly(_state); }
+        }
+
+        private int GetESIndex()
+        {
+            return Array.IndexOf(_state, 0);
         }
 
         private void SetInitialState()

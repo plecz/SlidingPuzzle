@@ -2,9 +2,9 @@
 using System.Collections;
 using Xunit;
 
-public class SerializedBoards_InvalidSize : TheoryData<string>
+public class TD_SerializedBoards_InvalidSize : TheoryData<string>
 {
-    public SerializedBoards_InvalidSize()
+    public TD_SerializedBoards_InvalidSize()
     {
         // Wrong width
         Add(@"4, 2,
