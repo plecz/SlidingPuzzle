@@ -35,7 +35,6 @@ namespace PuzzleCore.Test
 
         [Theory]
         [ClassData(typeof(TD_StandardBoardSizes))]
-
         public void CreatedBoard_StoreWidth(int width, int height, int[] tiles)
         {
             var sut = new BoardState(width, height, tiles);

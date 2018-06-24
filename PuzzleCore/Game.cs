@@ -11,29 +11,34 @@ namespace PuzzleCore
     {
         public Game(BoardState startState, BoardState finalState = null)
         {
-            CurrentBoardState = startState;
-            _startState = startState;
             if (finalState == null)
             {
                 finalState = DefaultFinalState(startState.Width, startState.Height);
             }
+
+            ValidateBoardSizes(startState, finalState);
+            ValidateSolvability(startState);
+
+            CurrentBoardState = startState;
+            _startState = startState;
             _finalState = finalState;
             _moves = new List<Directions>();
-            ValidateSolvability();
+
         }
 
-        public bool IsSolved
+        private void ValidateBoardSizes(BoardState startState, BoardState finalState)
         {
-            get
+            if (startState.Width != finalState.Width ||
+                startState.Height != finalState.Height)
             {
-                return Enumerable.SequenceEqual(CurrentBoardState.Tiles, _finalState.Tiles);
+                throw new ArgumentException("Start and final boards cannot have different sizes");
             }
         }
 
-        private void ValidateSolvability()
+        private void ValidateSolvability(BoardState state)
         {
-            int inversions = CountInversions(CurrentBoardState.Tiles);
-            if (!CheckSolvability(inversions))
+            int inversions = CountInversions(state.Tiles);
+            if (!CheckSolvability(state, inversions))
             {
                 throw new ArgumentException("The given board state is unsolvable");
             }
@@ -57,15 +62,15 @@ namespace PuzzleCore
             return inversions;
         }
 
-        private bool CheckSolvability(int inversions)
+        private bool CheckSolvability(BoardState state, int inversions)
         {
-            if (CurrentBoardState.Width % 2 == 0)
+            if (state.Width % 2 == 0)
             {
                 return (inversions % 2 == 0);
             }
             else
             {
-                int esRowFromBottom = CurrentBoardState.Height - CurrentBoardState.ESPosition.Item2;
+                int esRowFromBottom = state.Height - state.ESPosition.Item2;
                 if (esRowFromBottom % 2 == 0)
                 {
                     return (inversions % 2 == 1);
@@ -74,6 +79,14 @@ namespace PuzzleCore
                 {
                     return (inversions % 2 == 0);
                 }
+            }
+        }
+
+        public bool IsSolved
+        {
+            get
+            {
+                return Enumerable.SequenceEqual(CurrentBoardState.Tiles, _finalState.Tiles);
             }
         }
 
@@ -100,6 +113,9 @@ namespace PuzzleCore
         }
 
         public BoardState CurrentBoardState { get; private set; }
+        public BoardState StartState { get { return _startState; } }
+
+        public BoardState FinalState { get { return _finalState; } }
 
         private BoardState _startState;
         private BoardState _finalState;
