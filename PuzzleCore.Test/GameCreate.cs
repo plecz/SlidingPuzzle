@@ -8,7 +8,7 @@ namespace PuzzleCore.Test
         [Fact]
         public void CreatedGame_NotNull()
         {
-            var startState = new BoardState(2, 2, new int[] { 0, 1, 2, 3 });
+            var startState = new BoardState(2, 2, new int[] { 0, 2, 1, 3 });
 
             var sut = new Game(startState);
 
@@ -18,7 +18,7 @@ namespace PuzzleCore.Test
         [Fact]
         public void CreatedGame_WithFinalState_NotNull()
         {
-            var startState = new BoardState(2, 2, new int[] { 0, 1, 2, 3 });
+            var startState = new BoardState(2, 2, new int[] { 0, 2, 1, 3 });
             var finalState = new BoardState(2, 2, new int[] { 1, 2, 3, 0 });
 
             var sut = new Game(startState, finalState);
@@ -29,7 +29,7 @@ namespace PuzzleCore.Test
         [Fact]
         public void CreatedGame_StoresStartState()
         {
-            var startState = new BoardState(2, 2, new int[] { 0, 1, 2, 3 });
+            var startState = new BoardState(2, 2, new int[] { 0, 2, 1, 3 });
 
             var sut = new Game(startState);
 
@@ -39,7 +39,7 @@ namespace PuzzleCore.Test
         [Fact]
         public void CreatedGame_WithFinalState_StoresStartState()
         {
-            var startState = new BoardState(2, 2, new int[] { 0, 1, 2, 3 });
+            var startState = new BoardState(2, 2, new int[] { 0, 2, 1, 3 });
             var finalState = new BoardState(2, 2, new int[] { 1, 2, 3, 0 });
 
             var sut = new Game(startState, finalState);
@@ -50,7 +50,7 @@ namespace PuzzleCore.Test
         [Fact]
         public void CreatedGame_WithFinalState_StoresFinalState()
         {
-            var startState = new BoardState(2, 2, new int[] { 0, 1, 2, 3 });
+            var startState = new BoardState(2, 2, new int[] { 0, 2, 1, 3 });
             var finalState = new BoardState(2, 2, new int[] { 1, 0, 3, 2 });
 
             var sut = new Game(startState, finalState);
@@ -61,7 +61,7 @@ namespace PuzzleCore.Test
         [Fact]
         public void CreatedGame_WithoutFinalState_StoresDefaultFinalState()
         {
-            var startState = new BoardState(2, 2, new int[] { 0, 1, 2, 3 });
+            var startState = new BoardState(2, 2, new int[] { 0, 2, 1, 3 });
             var finalState = new BoardState(2, 2, new int[] { 1, 2, 3, 0 });
 
             var sut = new Game(startState, finalState);

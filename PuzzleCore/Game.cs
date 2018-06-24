@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PuzzleCore
 {
@@ -64,7 +62,7 @@ namespace PuzzleCore
 
         private bool CheckSolvability(BoardState state, int inversions)
         {
-            if (state.Width % 2 == 0)
+            if (state.Width % 2 != 0)
             {
                 return (inversions % 2 == 0);
             }

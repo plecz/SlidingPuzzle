@@ -62,17 +62,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardEquality.cs" />
-    <Compile Include="CreateBoard.cs" />
+    <Compile Include="BoardCreate.cs" />
     <Compile Include="DeserializeBoard.cs" />
     <Compile Include="BoardESPosition.cs" />
     <Compile Include="BoardMove.cs" />
     <Compile Include="GameCreate.cs" />
-    <Compile Include="GameFinished.cs" />
     <Compile Include="GameSolvable.cs" />
     <Compile Include="GameSolved.cs" />
     <Compile Include="TD_BoardEquality.cs" />
-    <Compile Include="TD_CreateGame.cs" />
+    <Compile Include="TD_GameCreate.cs" />
     <Compile Include="TD_ESPosition.cs" />
+    <Compile Include="TD_GameSolvable.cs" />
+    <Compile Include="TD_GameSolved.cs" />
+    <Compile Include="TD_GameUnsolvable.cs" />
     <Compile Include="TD_Move.cs" />
     <Compile Include="TD_SerializedBoards_InvalidData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,7 +83,7 @@
     <Compile Include="TD_SerializedBoards_InvalidSize.cs" />
     <Compile Include="TD_StandardBoardSizes.cs" />
     <Compile Include="TD_ValidMoves.cs" />
-    <Compile Include="ValidMoves.cs" />
+    <Compile Include="BoardValidMoves.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

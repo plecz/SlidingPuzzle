@@ -3,7 +3,7 @@ using Xunit;
 
 namespace PuzzleCore.Test
 {
-    public class CreateBoard
+    public class BoardCreate
     {
         [Theory]
         [ClassData(typeof(TD_StandardBoardSizes))]
