@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleCore
 {
-    public class Board
+    public class Board : IEquatable<Board>
     {
         public Board(int width, int height)
         {
@@ -174,6 +174,39 @@ namespace PuzzleCore
             return nextState;
         }
 
+        public bool Equals(Board other)
+        {
+            if (other != null)
+            {
+                if (Width == other.Width &&
+                    Height == other.Height &&
+                    Enumerable.SequenceEqual(State, other.State))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+
+            return Equals(obj as Board);
+        }
 
         private readonly int _width;
         private readonly int _height;
