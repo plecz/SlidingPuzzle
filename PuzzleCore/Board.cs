@@ -18,7 +18,7 @@ namespace PuzzleCore
 
             _state = new int[width * height];
             //***
-            SetInitialState();
+            SetFinalState();
         }
 
         private Board(int[] data)
@@ -154,7 +154,7 @@ namespace PuzzleCore
             return Array.IndexOf(_state, 0);
         }
 
-        private void SetInitialState()
+        private void SetFinalState()
         {
             var len = Width * Height;
             _state = (from n in Enumerable.Range(1, len) select n % len).ToArray();
@@ -188,6 +188,7 @@ namespace PuzzleCore
 
             return nextState;
         }
+
 
         private readonly int _width;
         private readonly int _height;

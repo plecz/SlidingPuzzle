@@ -12,7 +12,17 @@ namespace PuzzleCore
         public Game(Board startBoard)
         {
             CurrentBoard = startBoard;
+            _finalState = new Board(startBoard.Width, startBoard.Height);
             ValidateSolvability();
+        }
+
+        public bool IsSolved
+        {
+            get
+            {
+                //TODO: make state/board naming consistent
+                return Enumerable.SequenceEqual(CurrentBoard.State, _finalState.State);
+            }
         }
 
         private void ValidateSolvability()
@@ -61,6 +71,8 @@ namespace PuzzleCore
                 }
             }
         }
+
+        private Board _finalState;
 
         public Board CurrentBoard { get; private set; }
     }

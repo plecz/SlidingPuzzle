@@ -64,6 +64,7 @@
     <Compile Include="CreateBoard.cs" />
     <Compile Include="DeserializeBoard.cs" />
     <Compile Include="Move.cs" />
+    <Compile Include="TD_Move.cs" />
     <Compile Include="TD_SerializedBoards_InvalidData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TD_SerializedBoards.cs" />
