@@ -10,37 +10,13 @@ namespace PuzzleCore
 {
     public class BoardState : IEquatable<BoardState>
     {
-        public BoardState(int width, int height) //, int[] tiles)
+        public BoardState(int width, int height, int[] tiles)
         {
             _width = width;
             _height = height;
             ValidateSize();
 
             _tiles = new int[width * height];
-            _validMoves = GetValidMoves();
-            
-            //***
-            SetFinalState();
-        }
-
-        //TODO: make use of other ctor
-        private BoardState(int[] data)
-        {
-            if (data.Length < 6)
-            {
-                throw new ArgumentException("There is not enough data to construct the board state");
-            }
-            _width = data[0];
-            _height = data[1];
-            ValidateSize();
-
-            var length = _width * _height;
-            if (data.Length != length + 2)
-            {
-                throw new ArgumentException("Board size does not match tile data length");
-            }
-            var tiles = data.Skip(2).ToArray();
-            _tiles = tiles;
             ValidateTiles();
 
             _validMoves = GetValidMoves();
@@ -69,7 +45,22 @@ namespace PuzzleCore
         public static BoardState FromString(string boardData)
         {
             var data = Array.ConvertAll(boardData.Split(','), int.Parse);
-            return new BoardState(data);
+
+            if (data.Length < 6)
+            {
+                throw new ArgumentException("There is not enough data to construct the board state");
+            }
+            var width = data[0];
+            var height = data[1];
+
+            var length = width * height;
+            if (data.Length != length + 2)
+            {
+                throw new ArgumentException("Board size does not match tile data length");
+            }
+            var tiles = data.Skip(2).ToArray();
+
+            return new BoardState(width, height, tiles);
         }
 
         public override string ToString()
@@ -127,15 +118,15 @@ namespace PuzzleCore
         {
             if (direction != Directions.Up && direction != Directions.Down && direction != Directions.Left && direction != Directions.Right)
             {
-                throw new ArgumentException("direction ***");
+                throw new ArgumentException("Cannot specify more than one direction for movement");
             }
             if ((ValidMoves & direction) == Directions.None)
             {
-                throw new ArgumentException("direction ***");
+                throw new ArgumentException($"Specified direction ({direction}) is not a valid move");
             }
 
-            var nextBoard = new BoardState(Width, Height);
-            nextBoard._tiles = NextState(direction);
+            var nextTiles = NextState(direction);
+            var nextBoard = new BoardState(Width, Height, nextTiles);
             return nextBoard;
         }
 
@@ -147,12 +138,6 @@ namespace PuzzleCore
         private int GetESIndex()
         {
             return Array.IndexOf(_tiles, 0);
-        }
-
-        private void SetFinalState()
-        {
-            var len = Width * Height;
-            _tiles = (from n in Enumerable.Range(1, len) select n % len).ToArray();
         }
 
         private int[] NextState(Directions direction)
@@ -178,7 +163,7 @@ namespace PuzzleCore
                     nextState[esIndex + 1] = 0;
                     break;
                 default:
-                    throw new ArgumentException("direction ***");
+                    throw new ArgumentException($"Illegal/unknown movement direction specified ({direction})");
             }
 
             return nextState;

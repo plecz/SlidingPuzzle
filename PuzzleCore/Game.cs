@@ -9,11 +9,15 @@ namespace PuzzleCore
 {
     public class Game
     {
-        public Game(BoardState startBoard)
+        public Game(BoardState startState, BoardState finalState = null)
         {
-            CurrentBoard = startBoard;
-            _startState = startBoard;
-            _finalState = new BoardState(startBoard.Width, startBoard.Height);
+            CurrentBoardState = startState;
+            _startState = startState;
+            if (finalState == null)
+            {
+                finalState = DefaultFinalState(startState.Width, startState.Height);
+            }
+            _finalState = finalState;
             _moves = new List<Directions>();
             ValidateSolvability();
         }
@@ -22,17 +26,16 @@ namespace PuzzleCore
         {
             get
             {
-                //TODO: make state/board naming consistent
-                return Enumerable.SequenceEqual(CurrentBoard.Tiles, _finalState.Tiles);
+                return Enumerable.SequenceEqual(CurrentBoardState.Tiles, _finalState.Tiles);
             }
         }
 
         private void ValidateSolvability()
         {
-            int inversions = CountInversions(CurrentBoard.Tiles);
+            int inversions = CountInversions(CurrentBoardState.Tiles);
             if (!CheckSolvability(inversions))
             {
-                throw new ArgumentException("startBoard ***");
+                throw new ArgumentException("The given board state is unsolvable");
             }
         }
 
@@ -56,13 +59,13 @@ namespace PuzzleCore
 
         private bool CheckSolvability(int inversions)
         {
-            if (CurrentBoard.Width % 2 == 0)
+            if (CurrentBoardState.Width % 2 == 0)
             {
                 return (inversions % 2 == 0);
             }
             else
             {
-                int esRowFromBottom = CurrentBoard.Height - CurrentBoard.ESPosition.Item2;
+                int esRowFromBottom = CurrentBoardState.Height - CurrentBoardState.ESPosition.Item2;
                 if (esRowFromBottom % 2 == 0)
                 {
                     return (inversions % 2 == 1);
@@ -76,7 +79,7 @@ namespace PuzzleCore
 
         public void Move(Directions direction)
         {
-            CurrentBoard = CurrentBoard.Move(direction);
+            CurrentBoardState = CurrentBoardState.Move(direction);
             _moves.Add(direction);
         }
 
@@ -87,7 +90,16 @@ namespace PuzzleCore
                 return _moves.AsReadOnly();
             }
         }
-        public BoardState CurrentBoard { get; private set; }
+
+        private BoardState DefaultFinalState(int width, int height)
+        {
+            var len = width * height;
+            var tiles = (from n in Enumerable.Range(1, len) select n % len).ToArray();
+
+            return new BoardState(width, height, tiles);
+        }
+
+        public BoardState CurrentBoardState { get; private set; }
 
         private BoardState _startState;
         private BoardState _finalState;
