@@ -102,12 +102,40 @@ namespace PuzzleCore
             }
         }
 
-        private BoardState DefaultFinalState(int width, int height)
+        private static BoardState DefaultFinalState(int width, int height)
         {
             var len = width * height;
             var tiles = (from n in Enumerable.Range(1, len) select n % len).ToArray();
 
             return new BoardState(width, height, tiles);
+        }
+
+        public static BoardState GetRandomState(int width, int height, int rndCount)
+        {
+            var finalState = DefaultFinalState(width, height);
+            return Randomize(finalState, rndCount);
+        }
+
+        private static BoardState Randomize(BoardState board, int rndCount)
+        {
+            Directions[] values = (Directions[])Enum.GetValues(typeof(Directions));
+            var rnd = new Random();
+            for (int i = 0; i < rndCount; ++i)
+            {
+                Directions move = Directions.None;
+                while (move == Directions.None)
+                {
+                    var r = rnd.Next(1, 5);
+                    var d = values[r];
+                    move = board.ValidMoves & d;
+                    if (move != Directions.None)
+                    {
+                        board = board.Move(move);
+                    }
+                }
+            }
+
+            return board;
         }
 
         public BoardState CurrentBoardState { get; private set; }
