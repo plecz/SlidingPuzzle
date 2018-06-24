@@ -12,31 +12,31 @@ namespace PuzzleCore
     {
         public BoardState(int width, int height, int[] tiles)
         {
+            ValidateSize(width, height);
             _width = width;
             _height = height;
-            ValidateSize();
 
-            _tiles = new int[width * height];
-            ValidateTiles();
+            ValidateTiles(tiles);
+            _tiles = tiles;
 
             _validMoves = GetValidMoves();
         }
 
-        private void ValidateSize()
+        private void ValidateSize(int width, int height)
         {
-            if (_width < 2)
+            if (width < 2)
             {
                 throw new ArgumentException("Board width cannot be less than 2");
             }
-            if (_height < 2)
+            if (height < 2)
             {
                 throw new ArgumentException("Board height cannot be less than 2");
             }
         }
 
-        private void ValidateTiles()
+        private void ValidateTiles(int[] tiles)
         {
-            if (!Enumerable.SequenceEqual(_tiles.OrderBy(d => d), Enumerable.Range(0, _tiles.Length)))
+            if (!Enumerable.SequenceEqual(tiles.OrderBy(d => d), Enumerable.Range(0, tiles.Length)))
             {
                 throw new ArgumentException("Board state is invalid (duplicate/missing/invalid tiles)");
             }

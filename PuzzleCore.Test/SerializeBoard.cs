@@ -8,18 +8,18 @@ namespace PuzzleCore.Test
     {
         [Theory]
         [ClassData(typeof(TD_StandardBoardSizes))]
-        public void SerializedBoard_NotEmpty(int width, int height)
+        public void SerializedBoard_NotEmpty(int width, int height, int[] tiles)
         {
-            var sut = new BoardState(width, height);
+            var sut = new BoardState(width, height, tiles);
 
             Assert.False(string.IsNullOrWhiteSpace(sut.ToString()));
         }
 
         [Theory]
         [ClassData(typeof(TD_StandardBoardSizes))]
-        public void SerializedBoard_HasCorrectNumberOfElements(int width, int height)
+        public void SerializedBoard_HasCorrectNumberOfElements(int width, int height, int[] tiles)
         {
-            var sut = new BoardState(width, height);
+            var sut = new BoardState(width, height, tiles);
 
             var elements = SplitData(sut.ToString());
 
@@ -28,9 +28,9 @@ namespace PuzzleCore.Test
 
         [Theory]
         [ClassData(typeof(TD_StandardBoardSizes))]
-        public void SerializedBoard_AllElementsParseableToInt(int width, int height)
+        public void SerializedBoard_AllElementsParseableToInt(int width, int height, int[] tiles)
         {
-            var sut = new BoardState(width, height);
+            var sut = new BoardState(width, height, tiles);
 
             var integers = Array.ConvertAll(SplitData(sut.ToString()), int.Parse);
 
@@ -38,12 +38,10 @@ namespace PuzzleCore.Test
         }
 
         [Theory]
-        [InlineData(2)]
-        [InlineData(3)]
-        [InlineData(4)]
-        public void SerializedBoard_HasCorrectWidth(int width)
+        [ClassData(typeof(TD_StandardBoardSizes))]
+        public void SerializedBoard_HasCorrectWidth(int width, int height, int[] tiles)
         {
-            var sut = new BoardState(width, 5);
+            var sut = new BoardState(width, height, tiles);
             var expected = width.ToString();
 
             var elements = SplitData(sut.ToString());
@@ -53,12 +51,10 @@ namespace PuzzleCore.Test
         }
 
         [Theory]
-        [InlineData(2)]
-        [InlineData(3)]
-        [InlineData(4)]
-        public void SerializedBoard_HasCorrectHeight(int height)
+        [ClassData(typeof(TD_StandardBoardSizes))]
+        public void SerializedBoard_HasCorrectHeight(int width, int height, int[] tiles)
         {
-            var sut = new BoardState(5, height);
+            var sut = new BoardState(width, height, tiles);
             var expected = height.ToString();
 
             var elements = SplitData(sut.ToString());
@@ -69,13 +65,11 @@ namespace PuzzleCore.Test
 
         [Theory]
         [ClassData(typeof(TD_StandardBoardSizes))]
-        public void SerializedBoard_HasCorrectInitialStateData(int width, int height)
+        public void SerializedBoard_HasCorrectTileData(int width, int height, int[] tiles)
         {
-            var sut = new BoardState(width, height);
+            var sut = new BoardState(width, height, tiles);
 
-            var integers = Array.ConvertAll(SplitData(sut.ToString()), int.Parse);
-
-            Assert.Equal(sut.Tiles, integers.Skip(2));
+            Assert.Equal(tiles, sut.Tiles);
 
         }
 

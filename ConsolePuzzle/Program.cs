@@ -10,7 +10,7 @@ namespace ConsolePuzzle
             int width = 4;
             int height = 4;
 
-            BoardState board = new BoardState(width, height);
+            BoardState board = new BoardState(width, height, new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
             var config = DisplayConfig.Default;
 
             BoardDisplay display = new BoardDisplay(width * height, config);
