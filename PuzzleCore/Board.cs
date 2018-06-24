@@ -84,21 +84,6 @@ namespace PuzzleCore
                 return new Tuple<int, int>(i % Width, i / Width);
             }
         }
-        //public int ESRow
-        //{
-        //    get
-        //    {
-        //        return GetESIndex() % Width;
-        //    }
-        //}
-
-        //public int ESColumn
-        //{
-        //    get
-        //    {
-        //        return GetESIndex() / Width;
-        //    }
-        //}
 
         public Directions ValidMoves
         {
