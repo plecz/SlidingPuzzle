@@ -12,7 +12,7 @@ namespace ConsolePuzzle
         public char LeftTileDelimiter { get; set; }
         public char RightTileDelimiter { get; set; }
         public char EmptySpace { get; set; }
-        Dictionary<Directions, char> Move { get; set; }
+        public Dictionary<Directions, char> Move { get; set; }
         //public char MoveUp { get; set; }
         //public char MoveDown { get; set; }
         //public char MoveLeft { get; set; }
@@ -31,10 +31,10 @@ namespace ConsolePuzzle
                         EmptySpace = '_',
                         Move = new Dictionary<Directions, char>
                         {
-                            [Directions.Up] = '↑',
-                            [Directions.Down] = '↓',
-                            [Directions.Left] = '←',
-                            [Directions.Right] = '→'
+                            [Directions.Up] = 'U',   //'↑',
+                            [Directions.Down] = 'D', //'↓',
+                            [Directions.Left] = 'L', //'←',
+                            [Directions.Right] = 'R' //'→'
                         }
                     };
                 }

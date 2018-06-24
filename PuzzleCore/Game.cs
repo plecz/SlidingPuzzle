@@ -102,6 +102,18 @@ namespace PuzzleCore
             }
         }
 
+        public void Reset()
+        {
+            _moves.Clear();
+            CurrentBoardState = _startState;
+        }
+
+        public void Shuffle()
+        {
+            _moves.Clear();
+            CurrentBoardState = GetRandomState(_startState.Width, _startState.Height);
+        }
+
         private static BoardState DefaultFinalState(int width, int height)
         {
             var len = width * height;
@@ -110,7 +122,7 @@ namespace PuzzleCore
             return new BoardState(width, height, tiles);
         }
 
-        public static BoardState GetRandomState(int width, int height, int rndCount)
+        public static BoardState GetRandomState(int width, int height, int rndCount = 100)
         {
             var finalState = DefaultFinalState(width, height);
             return Randomize(finalState, rndCount);

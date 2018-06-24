@@ -9,28 +9,21 @@ namespace ConsolePuzzle
         {
             int width = 4;
             int height = 4;
-            int rndCount = 100;
             if (args.Length >= 3)
             {
                 width = int.Parse(args[1]);
                 height = int.Parse(args[2]);
             }
-            if (args.Length >= 4)
-            {
-                rndCount = int.Parse(args[3]);
-            }
 
-            Game game = new Game(Game.GetRandomState(width, height, rndCount));
+            Game game = new Game(Game.GetRandomState(width, height));
 
             var config = DisplayConfig.Default;
-
-            BoardDisplay display = new BoardDisplay(width * height, config);
+            Display display = new Display(width * height, config);
 
             bool running = true;
             while (running)
             {
-                Console.Clear();
-                display.DumpBoard(game.CurrentBoardState);
+                display.Dump(game);
 
                 var d = Directions.None;
                 var c = Console.ReadKey(true).Key;
@@ -51,21 +44,33 @@ namespace ConsolePuzzle
                     case ConsoleKey.Escape:
                         running = false;
                         break;
-                    case ConsoleKey.S:
+                    case ConsoleKey.A:
                         //autosolve
                         break;
+                    case ConsoleKey.S:
+                        game.Shuffle();
+                        break;
                     case ConsoleKey.R:
-                        //randomize
+                        Replay();
+                        break;
+                    case ConsoleKey.Q:
+                        game.Reset();
                         break;
                     default:
                         break;
                 }
 
+                d = d & game.CurrentBoardState.ValidMoves;
                 if (d != Directions.None)
                 {
                     game.Move(d);
                 }
             }
+        }
+
+        static void Replay()
+        {
+
         }
     }
 }
