@@ -3,7 +3,7 @@ using Xunit;
 
 namespace PuzzleCore.Test
 {
-    public class Move
+    public class BoardMove
     {
         [Theory]
         [ClassData(typeof(TD_Move_Up))]

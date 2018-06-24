@@ -3,7 +3,7 @@ using Xunit;
 
 namespace PuzzleCore.Test
 {
-    public class ESPosition
+    public class BoardESPosition
     {
         #pragma warning disable xUnit1026 // Warning about unused test parameters
         [Theory]

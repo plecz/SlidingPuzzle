@@ -12,7 +12,9 @@ namespace PuzzleCore
         public Game(Board startBoard)
         {
             CurrentBoard = startBoard;
+            _startState = startBoard;
             _finalState = new Board(startBoard.Width, startBoard.Height);
+            _moves = new List<Directions>();
             ValidateSolvability();
         }
 
@@ -72,8 +74,23 @@ namespace PuzzleCore
             }
         }
 
-        private Board _finalState;
+        public void Move(Directions direction)
+        {
+            CurrentBoard = CurrentBoard.Move(direction);
+            _moves.Add(direction);
+        }
 
+        public IReadOnlyCollection<Directions> Moves
+        {
+            get
+            {
+                return _moves.AsReadOnly();
+            }
+        }
         public Board CurrentBoard { get; private set; }
+
+        private Board _startState;
+        private Board _finalState;
+        private List<Directions> _moves;
     }
 }
