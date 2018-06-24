@@ -63,7 +63,9 @@
   <ItemGroup>
     <Compile Include="CreateBoard.cs" />
     <Compile Include="DeserializeBoard.cs" />
+    <Compile Include="ESPosition.cs" />
     <Compile Include="Move.cs" />
+    <Compile Include="TD_ESPosition.cs" />
     <Compile Include="TD_Move.cs" />
     <Compile Include="TD_SerializedBoards_InvalidData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
