@@ -10,7 +10,7 @@ namespace PuzzleCore.Test
         [ClassData(typeof(TD_StandardBoardSizes))]
         public void SerializedBoard_NotEmpty(int width, int height)
         {
-            var sut = new Board(width, height);
+            var sut = new BoardState(width, height);
 
             Assert.False(string.IsNullOrWhiteSpace(sut.ToString()));
         }
@@ -19,7 +19,7 @@ namespace PuzzleCore.Test
         [ClassData(typeof(TD_StandardBoardSizes))]
         public void SerializedBoard_HasCorrectNumberOfElements(int width, int height)
         {
-            var sut = new Board(width, height);
+            var sut = new BoardState(width, height);
 
             var elements = SplitData(sut.ToString());
 
@@ -30,7 +30,7 @@ namespace PuzzleCore.Test
         [ClassData(typeof(TD_StandardBoardSizes))]
         public void SerializedBoard_AllElementsParseableToInt(int width, int height)
         {
-            var sut = new Board(width, height);
+            var sut = new BoardState(width, height);
 
             var integers = Array.ConvertAll(SplitData(sut.ToString()), int.Parse);
 
@@ -43,7 +43,7 @@ namespace PuzzleCore.Test
         [InlineData(4)]
         public void SerializedBoard_HasCorrectWidth(int width)
         {
-            var sut = new Board(width, 5);
+            var sut = new BoardState(width, 5);
             var expected = width.ToString();
 
             var elements = SplitData(sut.ToString());
@@ -58,7 +58,7 @@ namespace PuzzleCore.Test
         [InlineData(4)]
         public void SerializedBoard_HasCorrectHeight(int height)
         {
-            var sut = new Board(5, height);
+            var sut = new BoardState(5, height);
             var expected = height.ToString();
 
             var elements = SplitData(sut.ToString());
@@ -71,11 +71,11 @@ namespace PuzzleCore.Test
         [ClassData(typeof(TD_StandardBoardSizes))]
         public void SerializedBoard_HasCorrectInitialStateData(int width, int height)
         {
-            var sut = new Board(width, height);
+            var sut = new BoardState(width, height);
 
             var integers = Array.ConvertAll(SplitData(sut.ToString()), int.Parse);
 
-            Assert.Equal(sut.State, integers.Skip(2));
+            Assert.Equal(sut.Tiles, integers.Skip(2));
 
         }
 

@@ -9,7 +9,7 @@ namespace PuzzleCore.Test
         [ClassData(typeof(TD_StandardBoardSizes))]
         public void CreatedBoard_NotNull(int width, int height)
         {
-            var sut = new Board(width, height);
+            var sut = new BoardState(width, height);
 
             Assert.NotNull(sut);
         }
@@ -20,7 +20,7 @@ namespace PuzzleCore.Test
         [InlineData(1)]
         public void CreateBoard_SmallWidth_Throw(int width)
         {
-            Assert.Throws<ArgumentException>(() => new Board(width, 5));
+            Assert.Throws<ArgumentException>(() => new BoardState(width, 5));
         }
 
         [Theory]
@@ -29,7 +29,7 @@ namespace PuzzleCore.Test
         [InlineData(1)]
         public void CreateBoard_SmallHeight_Throw(int height)
         {
-            Assert.Throws<ArgumentException>(() => new Board(5, height));
+            Assert.Throws<ArgumentException>(() => new BoardState(5, height));
         }
 
 
@@ -39,7 +39,7 @@ namespace PuzzleCore.Test
         [InlineData(4)]
         public void CreatedBoard_StoreWidth(int width)
         {
-            var sut = new Board(width, 5);
+            var sut = new BoardState(width, 5);
 
             Assert.Equal(width, sut.Width);
         }
@@ -50,7 +50,7 @@ namespace PuzzleCore.Test
         [InlineData(4)]
         public void CreatedBoard_StoreHeight(int height)
         {
-            var sut = new Board(5, height);
+            var sut = new BoardState(5, height);
 
             Assert.Equal(height, sut.Height);
         }

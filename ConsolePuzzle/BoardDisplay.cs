@@ -15,13 +15,13 @@ namespace ConsolePuzzle
             _config = config;
         }
 
-        public void DumpBoard(Board board)
+        public void DumpBoard(BoardState board)
         {
             for (int i = 0; i < board.Height; ++i)
             {
                 for (int j = 0; j < board.Width; ++j)
                 {
-                    var tile = board.State[j + i * board.Width];
+                    var tile = board.Tiles[j + i * board.Width];
                     Console.Write($"{_config.LeftTileDelimiter}{FormatTile(tile)}{_config.RightTileDelimiter} ");
                 }
                 Console.WriteLine();

@@ -8,24 +8,27 @@ using System.Threading.Tasks;
 
 namespace PuzzleCore
 {
-    public class Board : IEquatable<Board>
+    public class BoardState : IEquatable<BoardState>
     {
-        public Board(int width, int height)
+        public BoardState(int width, int height) //, int[] tiles)
         {
             _width = width;
             _height = height;
             ValidateSize();
 
-            _state = new int[width * height];
+            _tiles = new int[width * height];
+            _validMoves = GetValidMoves();
+            
             //***
             SetFinalState();
         }
 
-        private Board(int[] data)
+        //TODO: make use of other ctor
+        private BoardState(int[] data)
         {
             if (data.Length < 6)
             {
-                throw new ArgumentException(nameof(data)); //***
+                throw new ArgumentException("There is not enough data to construct the board state");
             }
             _width = data[0];
             _height = data[1];
@@ -34,42 +37,44 @@ namespace PuzzleCore
             var length = _width * _height;
             if (data.Length != length + 2)
             {
-                throw new ArgumentException(nameof(data)); //***
+                throw new ArgumentException("Board size does not match tile data length");
             }
-            var state = data.Skip(2).ToArray();
-            _state = state;
-            ValidateState();
+            var tiles = data.Skip(2).ToArray();
+            _tiles = tiles;
+            ValidateTiles();
+
+            _validMoves = GetValidMoves();
         }
 
         private void ValidateSize()
         {
             if (_width < 2)
             {
-                throw new ArgumentException("*** width");
+                throw new ArgumentException("Board width cannot be less than 2");
             }
             if (_height < 2)
             {
-                throw new ArgumentException("*** height");
+                throw new ArgumentException("Board height cannot be less than 2");
             }
         }
 
-        private void ValidateState()
+        private void ValidateTiles()
         {
-            if (!Enumerable.SequenceEqual(_state.OrderBy(d => d), Enumerable.Range(0, _state.Length)))
+            if (!Enumerable.SequenceEqual(_tiles.OrderBy(d => d), Enumerable.Range(0, _tiles.Length)))
             {
-                throw new ArgumentException("*** state data");
+                throw new ArgumentException("Board state is invalid (duplicate/missing/invalid tiles)");
             }
         }
 
-        public static Board FromString(string boardData)
+        public static BoardState FromString(string boardData)
         {
             var data = Array.ConvertAll(boardData.Split(','), int.Parse);
-            return new Board(data);
+            return new BoardState(data);
         }
 
         public override string ToString()
         {
-            var s = string.Join(",", _state);
+            var s = string.Join(",", _tiles);
             return $"{Width},{Height},{s}";
         }
 
@@ -89,31 +94,36 @@ namespace PuzzleCore
         {
             get
             {
-                var column = ESPosition.Item1;
-                var row = ESPosition.Item2;
-                var d = Directions.None;
-                if (row > 0)
-                {
-                    d |= Directions.Up;
-                }
-                if (row < Height - 1)
-                {
-                    d |= Directions.Down;
-                }
-                if (column > 0)
-                {
-                    d |= Directions.Left;
-                }
-                if (column < Width - 1)
-                {
-                    d |= Directions.Right;
-                }
-
-                return d;
+                return _validMoves;
             }
         }
 
-        public Board Move(Directions direction)
+        private Directions GetValidMoves()
+        {
+            var column = ESPosition.Item1;
+            var row = ESPosition.Item2;
+            var d = Directions.None;
+            if (row > 0)
+            {
+                d |= Directions.Up;
+            }
+            if (row < Height - 1)
+            {
+                d |= Directions.Down;
+            }
+            if (column > 0)
+            {
+                d |= Directions.Left;
+            }
+            if (column < Width - 1)
+            {
+                d |= Directions.Right;
+            }
+
+            return d;
+        }
+
+        public BoardState Move(Directions direction)
         {
             if (direction != Directions.Up && direction != Directions.Down && direction != Directions.Left && direction != Directions.Right)
             {
@@ -124,47 +134,47 @@ namespace PuzzleCore
                 throw new ArgumentException("direction ***");
             }
 
-            var nextBoard = new Board(Width, Height);
-            nextBoard._state = NextState(direction);
+            var nextBoard = new BoardState(Width, Height);
+            nextBoard._tiles = NextState(direction);
             return nextBoard;
         }
 
-        public ReadOnlyCollection<int> State
+        public ReadOnlyCollection<int> Tiles
         {
-            get { return Array.AsReadOnly(_state); }
+            get { return Array.AsReadOnly(_tiles); }
         }
 
         private int GetESIndex()
         {
-            return Array.IndexOf(_state, 0);
+            return Array.IndexOf(_tiles, 0);
         }
 
         private void SetFinalState()
         {
             var len = Width * Height;
-            _state = (from n in Enumerable.Range(1, len) select n % len).ToArray();
+            _tiles = (from n in Enumerable.Range(1, len) select n % len).ToArray();
         }
 
         private int[] NextState(Directions direction)
         {
             var esIndex = GetESIndex();
-            int[] nextState = (int[])_state.Clone();
+            int[] nextState = (int[])_tiles.Clone();
             switch (direction)
             {
                 case Directions.Up:
-                    nextState[esIndex] = _state[esIndex - Width];
+                    nextState[esIndex] = _tiles[esIndex - Width];
                     nextState[esIndex - Width] = 0;
                     break;
                 case Directions.Down:
-                    nextState[esIndex] = _state[esIndex + Width];
+                    nextState[esIndex] = _tiles[esIndex + Width];
                     nextState[esIndex + Width] = 0;
                     break;
                 case Directions.Left:
-                    nextState[esIndex] = _state[esIndex - 1];
+                    nextState[esIndex] = _tiles[esIndex - 1];
                     nextState[esIndex - 1] = 0;
                     break;
                 case Directions.Right:
-                    nextState[esIndex] = _state[esIndex + 1];
+                    nextState[esIndex] = _tiles[esIndex + 1];
                     nextState[esIndex + 1] = 0;
                     break;
                 default:
@@ -174,13 +184,13 @@ namespace PuzzleCore
             return nextState;
         }
 
-        public bool Equals(Board other)
+        public bool Equals(BoardState other)
         {
             if (other != null)
             {
                 if (Width == other.Width &&
                     Height == other.Height &&
-                    Enumerable.SequenceEqual(State, other.State))
+                    Enumerable.SequenceEqual(Tiles, other.Tiles))
                 {
                     return true;
                 }
@@ -205,11 +215,12 @@ namespace PuzzleCore
                 return false;
             }
 
-            return Equals(obj as Board);
+            return Equals(obj as BoardState);
         }
 
         private readonly int _width;
         private readonly int _height;
-        private int[] _state;
+        private int[] _tiles;
+        private Directions _validMoves;
     }
 }

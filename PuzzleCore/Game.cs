@@ -9,11 +9,11 @@ namespace PuzzleCore
 {
     public class Game
     {
-        public Game(Board startBoard)
+        public Game(BoardState startBoard)
         {
             CurrentBoard = startBoard;
             _startState = startBoard;
-            _finalState = new Board(startBoard.Width, startBoard.Height);
+            _finalState = new BoardState(startBoard.Width, startBoard.Height);
             _moves = new List<Directions>();
             ValidateSolvability();
         }
@@ -23,13 +23,13 @@ namespace PuzzleCore
             get
             {
                 //TODO: make state/board naming consistent
-                return Enumerable.SequenceEqual(CurrentBoard.State, _finalState.State);
+                return Enumerable.SequenceEqual(CurrentBoard.Tiles, _finalState.Tiles);
             }
         }
 
         private void ValidateSolvability()
         {
-            int inversions = CountInversions(CurrentBoard.State);
+            int inversions = CountInversions(CurrentBoard.Tiles);
             if (!CheckSolvability(inversions))
             {
                 throw new ArgumentException("startBoard ***");
@@ -87,10 +87,10 @@ namespace PuzzleCore
                 return _moves.AsReadOnly();
             }
         }
-        public Board CurrentBoard { get; private set; }
+        public BoardState CurrentBoard { get; private set; }
 
-        private Board _startState;
-        private Board _finalState;
+        private BoardState _startState;
+        private BoardState _finalState;
         private List<Directions> _moves;
     }
 }

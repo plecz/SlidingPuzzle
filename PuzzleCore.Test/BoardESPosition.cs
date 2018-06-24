@@ -10,7 +10,7 @@ namespace PuzzleCore.Test
         [ClassData(typeof(TD_ESPosition))]
         public void ESPosition_ColumnCorrect(string data, int column, int row)
         {
-            var sut = Board.FromString(data);
+            var sut = BoardState.FromString(data);
 
             Assert.Equal(sut.ESPosition.Item1, column);
         }
@@ -19,7 +19,7 @@ namespace PuzzleCore.Test
         [ClassData(typeof(TD_ESPosition))]
         public void ESPosition_RowCorrect(string data, int column, int row)
         {
-            var sut = Board.FromString(data);
+            var sut = BoardState.FromString(data);
 
             Assert.Equal(sut.ESPosition.Item2, row);
         }
