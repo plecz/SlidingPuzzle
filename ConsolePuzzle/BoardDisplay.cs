@@ -9,9 +9,10 @@ namespace ConsolePuzzle
 {
     public class BoardDisplay
     {
-        public BoardDisplay(int boardsize)
+        public BoardDisplay(int boardsize, DisplayConfig config)
         {
             _tileFormat = new String('0', boardsize.ToString().Length);
+            _config = config;
         }
 
         public void DumpBoard(Board board)
@@ -21,7 +22,7 @@ namespace ConsolePuzzle
                 for (int j = 0; j < board.Width; ++j)
                 {
                     var tile = board.State[j + i * board.Width];
-                    Console.Write($"[{FormatTile(tile)}] ");
+                    Console.Write($"{_config.LeftTileDelimiter}{FormatTile(tile)}{_config.RightTileDelimiter} ");
                 }
                 Console.WriteLine();
             }
@@ -40,5 +41,6 @@ namespace ConsolePuzzle
         }
 
         private string _tileFormat;
+        private DisplayConfig _config;
     }
 }

@@ -11,9 +11,9 @@ namespace ConsolePuzzle
             int height = 4;
 
             Board board = new Board(width, height);
+            var config = DisplayConfig.Default;
 
-
-            BoardDisplay display = new BoardDisplay(width * height);
+            BoardDisplay display = new BoardDisplay(width * height, config);
 
             bool running = true;
             while (running)
