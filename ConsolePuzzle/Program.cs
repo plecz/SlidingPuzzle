@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 
 using PuzzleCore;
 using PuzzleSolver;
@@ -20,12 +22,12 @@ namespace ConsolePuzzle
             Game game = new Game(Game.GetRandomState(width, height));
 
             var config = DisplayConfig.Default;
-            Display display = new Display(width * height, config);
+            _display = new Display(width * height, config);
 
             bool running = true;
             while (running)
             {
-                display.Dump(game);
+                _display.Dump(game);
 
                 var d = Directions.None;
                 var c = Console.ReadKey(true).Key;
@@ -47,13 +49,13 @@ namespace ConsolePuzzle
                         running = false;
                         break;
                     case ConsoleKey.A:
-                        Solve(game, config);
+                        Solve(game);
                         break;
                     case ConsoleKey.S:
                         game.Shuffle();
                         break;
                     case ConsoleKey.R:
-                        //Replay();
+                        Replay(game);
                         break;
                     case ConsoleKey.Q:
                         game.Reset();
@@ -70,17 +72,30 @@ namespace ConsolePuzzle
             }
         }
 
-        static void Solve(Game game, DisplayConfig config)
+        static void Solve(Game game)
         {
             game.Reset();
             var moves = Solver.Solve(game.CurrentBoardState, game.FinalState);
 
-            foreach (var m in moves)
+            Replay(game, moves);
+        }
+
+        static void Replay(Game game, IEnumerable<Directions> moves = null)
+        {
+            if (moves == null)
             {
-                Console.Write($"{config.Move[m]} ");
+                moves = new List<Directions>(game.Moves);
             }
 
-            Console.ReadLine();
+            game.Reset();
+            foreach (var m in moves)
+            {
+                _display.Dump(game);
+                game.Move(m);
+                Thread.Sleep(500);
+            }
         }
+
+        private static Display _display;
     }
 }

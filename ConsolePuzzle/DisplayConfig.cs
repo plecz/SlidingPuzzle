@@ -13,10 +13,7 @@ namespace ConsolePuzzle
         public char RightTileDelimiter { get; set; }
         public char EmptySpace { get; set; }
         public Dictionary<Directions, char> Move { get; set; }
-        //public char MoveUp { get; set; }
-        //public char MoveDown { get; set; }
-        //public char MoveLeft { get; set; }
-        //public char MoveRight { get; set; }
+        public int ReplayDelay { get; set; }
 
         public static DisplayConfig Default
         {
@@ -35,7 +32,7 @@ namespace ConsolePuzzle
                             [Directions.Down] = 'D', //'↓',
                             [Directions.Left] = 'L', //'←',
                             [Directions.Right] = 'R' //'→'
-                        }
+                        },
                     };
                 }
                 return _default;
