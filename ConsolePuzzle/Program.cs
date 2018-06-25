@@ -1,5 +1,7 @@
-﻿using PuzzleCore;
-using System;
+﻿using System;
+
+using PuzzleCore;
+using PuzzleSolver;
 
 namespace ConsolePuzzle
 {
@@ -45,13 +47,13 @@ namespace ConsolePuzzle
                         running = false;
                         break;
                     case ConsoleKey.A:
-                        //autosolve
+                        Solve(game, config);
                         break;
                     case ConsoleKey.S:
                         game.Shuffle();
                         break;
                     case ConsoleKey.R:
-                        Replay();
+                        //Replay();
                         break;
                     case ConsoleKey.Q:
                         game.Reset();
@@ -68,9 +70,17 @@ namespace ConsolePuzzle
             }
         }
 
-        static void Replay()
+        static void Solve(Game game, DisplayConfig config)
         {
+            game.Reset();
+            var moves = Solver.Solve(game.CurrentBoardState, game.FinalState);
 
+            foreach (var m in moves)
+            {
+                Console.Write($"{config.Move[m]} ");
+            }
+
+            Console.ReadLine();
         }
     }
 }

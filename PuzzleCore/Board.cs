@@ -203,6 +203,22 @@ namespace PuzzleCore
             return Equals(obj as BoardState);
         }
 
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hash = 17;
+                for (int i = 0; i < _tiles.Length; i++)
+                {
+                    hash = hash * 23 + _tiles[i];
+                }
+                hash = hash * 397 + Width;
+                hash = hash * 397 + Height;
+
+                return hash;
+            }
+        }
+
         private readonly int _width;
         private readonly int _height;
         private int[] _tiles;
